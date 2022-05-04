@@ -1,15 +1,11 @@
 import { json } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 
-import { getPosts } from "~/post";
-import type { Post } from "~/post";
-
 import { getTopTracks } from "~/lib/spotify";
 import type { Track } from "~/lib/spotify";
 
 interface LoadedData {
   tracks: Track[];
-  posts: Post[];
 }
 
 export const loader = async () => {
@@ -25,13 +21,11 @@ export const loader = async () => {
       imgUrl: track.album.images[0].url,
     }));
 
-  const posts = await getPosts();
-
-  return json({ tracks, posts });
+  return json({ tracks });
 };
 
 export default function Index() {
-  const { tracks, posts } = useLoaderData<LoadedData>();
+  const { tracks } = useLoaderData<LoadedData>();
   return (
     <>
       <h1 className="text-6xl font-bold text-primary">Hey, I'm Gareth.</h1>
@@ -39,23 +33,6 @@ export default function Index() {
         A front end developer from Belfast, UK. I plan to use this for
         experiments instead of a portfolio that gets forgotten about.
       </p>
-
-      {/* <h2 className="mt-10 text-4xl font-bold md:mt-20 text-primary">
-        Latest Posts
-      </h2>
-      <p className="mt-4">
-        Stuff I have leart, I thought was pretty interesting.
-      </p>
-
-      <ul className="mt-4 leading-loose">
-        {posts.map((post: Post) => (
-          <li key={post.slug}>
-            <Link to={`/blog/${post.slug}`} prefetch="intent">
-              {post.title}
-            </Link>
-          </li>
-        ))}
-      </ul> */}
 
       <h2 className="mt-10 text-4xl font-bold md:mt-20 text-primary">
         Top Tracks
