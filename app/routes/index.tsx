@@ -1,5 +1,6 @@
+import type { MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData, Link } from "@remix-run/react";
+import { useLoaderData, Link, Meta } from "@remix-run/react";
 
 import { getTopTracks } from "~/lib/spotify";
 import type { Track } from "~/lib/spotify";
@@ -7,6 +8,14 @@ import type { Track } from "~/lib/spotify";
 interface LoadedData {
   tracks: Track[];
 }
+
+export const meta: MetaFunction = () => {
+  const description = `Front End Developer from Belfast, Northern Ireland`;
+  return {
+    title: "iamgd",
+    description,
+  };
+};
 
 export const loader = async () => {
   const res = await getTopTracks();
@@ -40,7 +49,7 @@ export default function Index() {
       <p className="mt-4">
         My top 10 tracks from the past 4 weeks using the Spotify API.
       </p>
-      <ul className="grid md:grid-cols-2 mt-4 space-y-4 gap-x-6">
+      <ul className="grid mt-4 space-y-4 lg:grid-cols-2 gap-x-6">
         {tracks.map((track: Track) => (
           <li
             key={track.songUrl}
@@ -54,7 +63,7 @@ export default function Index() {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-base text-gray-200 truncate">{track.title}</p>
+              <p className="text-base text-gray-200">{track.title}</p>
               <p className="text-lg font-bold tracking-wider text-gray-100">
                 {track.artist}
               </p>
