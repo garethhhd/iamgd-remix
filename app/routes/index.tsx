@@ -40,7 +40,7 @@ export default function Index() {
       <p className="mt-4">
         My top 10 tracks from the past 4 weeks using the Spotify API.
       </p>
-      <ul className="grid grid-cols-2 mt-4 space-y-4 gap-x-6">
+      <ul className="grid md:grid-cols-2 mt-4 space-y-4 gap-x-6">
         {tracks.map((track: Track) => (
           <li
             key={track.songUrl}
